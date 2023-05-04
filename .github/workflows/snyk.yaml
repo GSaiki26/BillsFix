@@ -1,0 +1,21 @@
+name: "Check snyk"
+
+on:
+  pull_request:
+    branches: [master, develop]
+
+jobs:
+  run-snyk:
+    strategy:
+      matrix:
+        os: [Ubuntu-22.04]
+        version: [19]
+    runs-on: ${{  matrix.os  }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Snyk
+        uses: snyk/actions@0.3.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
